@@ -14,14 +14,18 @@ if Meteor.isClient
 			console.log "base.before"
 			@subscribe("data").wait()
 
-	class @SubRouteController extends BaseRouteController
-		template: "route"
 		data: ->
 			if not @ready()
 				@stop()
 				return
-
+				
 			Data.find({}).fetch()
+
+		after: ->
+			console.log "base.after"
+
+	class @SubRouteController extends BaseRouteController
+		template: "route"
 
 	Template.route.serializeData = ->
 		JSON.stringify(this)
